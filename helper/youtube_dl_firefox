@@ -46,7 +46,9 @@ DOWNLOADS = Path.home() / "Downloads"
 message = get_message()
 
 action = message["action"]
-if action == "download":
+if action == "test":
+    reply = {"success": True}
+elif action == "download":
     url = message["url"]
     p = run(
         ["youtube-dl", "--print-json", "--", url],

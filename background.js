@@ -22,6 +22,24 @@ async function sendNativeMessage(message) {
   return await browser.runtime.sendNativeMessage("youtube_dl_firefox", message);
 }
 
+let helperWorking = false;
+async function testHelper() {
+  try {
+    const response = await sendNativeMessage({
+      action: "test",
+    });
+    helperWorking = response["success"];
+  } catch (e) {
+    console.error("AAAAA");
+    console.error(e);
+    helperWorking = false;
+  }
+
+  return helperWorking;
+}
+
+testHelper();
+
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   switch (message.type) {
     case "popupOpen":
@@ -34,7 +52,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       return (async () => {
         await updateBadge();
-        return { files: files };
+        return { files: files, helperWorking: await testHelper() };
       })();
 
     case "openFile":
@@ -54,6 +72,16 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 async function download(url) {
+  if (!await testHelper()) {
+    await browser.notifications.create(null, {
+      type: "basic",
+      title: "youtube-dl",
+      message: "Couldn't communicate with helper program!\nHave you installed it?",
+      iconUrl: "icon.svg",
+    });
+    return;
+  }
+
   const file = {
     url: url,
     status: "downloading",
@@ -113,10 +141,10 @@ browser.contextMenus.create({
   },
 });
 
-browser.contextMenus.onClicked.addListener((info, tab) => {
+browser.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.linkUrl) {
-    download(info.linkUrl);
+    await download(info.linkUrl);
   } else {
-    download(info.pageUrl);
+    await download(info.pageUrl);
   }
 });

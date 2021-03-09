@@ -61,54 +61,61 @@
   {#await promise}
     <p>Loading...</p>
   {:then}
-    <table>
-      <tbody>
-        {#each data.files as file}
-          <tr>
-            <td
-              class="file status-{file.status}"
-              class:viewed={file.viewed}
-              on:click={openFile(file)}
-            >
-              <figure>
-                <img src={file.thumbnail} alt="" />
-              </figure>
-              <span class="title">
-                <SpanWithTitle>{file.title || file.url}</SpanWithTitle></span
+    {#if !data.helperWorking}
+      <div class="center">
+        <h2>Can't communicate with helper</h2>
+      <p>
+        For installation instructions, see <a
+          href="https://github.com/Tyilo/youtube_dl_firefox">here</a
+        >.
+      </p>
+      </div>
+    {:else if data.files.length === 0}
+      <h2 class="center">No files downloaded</h2>
+    {:else}
+      <table>
+        <tbody>
+          {#each data.files as file}
+            <tr>
+              <td
+                class="file status-{file.status}"
+                class:viewed={file.viewed}
+                on:click={openFile(file)}
               >
-              <span class="subtitle">
-                <SpanWithTitle>
-                  {#if file.status === "downloading"}
-                    Downloading...
-                  {:else if file.status === "done"}
-                    {file.filename}
-                  {:else if file.status === "error"}
-                    Error: {file.error}
+                <figure>
+                  <img src={file.thumbnail} alt="" />
+                </figure>
+                <span class="title">
+                  <SpanWithTitle>{file.title || file.url}</SpanWithTitle></span
+                >
+                <span class="subtitle">
+                  <SpanWithTitle>
+                    {#if file.status === "downloading"}
+                      Downloading...
+                    {:else if file.status === "done"}
+                      {file.filename}
+                    {:else if file.status === "error"}
+                      Error: {file.error}
+                    {/if}
+                  </SpanWithTitle>
+                </span>
+                <div class="actions">
+                  {#if file.status === "done"}
+                    <button
+                      type="button"
+                      on:click={(e) => {
+                        e.stopPropagation();
+                        showFile(file);
+                      }}>Show</button
+                    >
                   {/if}
-                </SpanWithTitle>
-              </span>
-              <div class="actions">
-                {#if file.status === "done"}
-                  <button
-                    type="button"
-                    on:click={(e) => {
-                      e.stopPropagation();
-                      showFile(file);
-                    }}>Show</button
-                  >
-                {/if}
-              </div>
-            </td>
-          </tr>
-        {:else}
-          <tr>
-            <td>
-              <h1 style="text-align: center;">No files downloaded</h1>
-            </td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
+                </div>
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    {/if}
   {/await}
 </div>
 
@@ -194,5 +201,9 @@
     grid-area: actions;
     align-self: center;
     justify-self: center;
+  }
+
+  .center, .center * {
+    text-align: center;
   }
 </style>
