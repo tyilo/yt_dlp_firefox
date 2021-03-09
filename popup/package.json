@@ -1,0 +1,15 @@
+{
+  "name": "popup",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "rollup-plugin-svelte": "^7.1.0",
+    "svelte": "^3.35.0",
+    "svelte-preprocess": "^4.6.9",
+    "vite": "^2.0.5"
+  }
+}
