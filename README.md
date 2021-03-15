@@ -4,4 +4,6 @@ A Firefox browser extension for downloading media with [`youtube-dl`](https://yo
 
 ## Installation
 
-Run `make` and install the built extension in `web-ext-artifacts/`.
+Install the extension from [here](https://addons.mozilla.org/en-US/firefox/addon/youtube-dl-downloader/).
+
+Then clone this repository and run `make install` to install the required helper.
