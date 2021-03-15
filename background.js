@@ -97,10 +97,18 @@ async function download(url) {
     iconUrl: "icon.svg",
   });
 
-  const response = await sendNativeMessage({
-    action: "download",
-    url: url,
-  });
+  let response;
+  try {
+    response = await sendNativeMessage({
+      action: "download",
+      url: url,
+    });
+  } catch(e) {
+    response = {
+      success: false,
+      error: `Got exception communicating with helper: ${e}`,
+    };
+  }
 
   await browser.notifications.clear(notificationId);
 
