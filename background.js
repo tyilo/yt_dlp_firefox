@@ -30,8 +30,6 @@ async function testHelper() {
     });
     helperWorking = response["success"];
   } catch (e) {
-    console.error("AAAAA");
-    console.error(e);
     helperWorking = false;
   }
 
