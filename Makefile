@@ -7,6 +7,7 @@ dev: install
 		 split-window 'web-ext run'
 
 install:
+	@mkdir -p ~/.mozilla/native-messaging-hosts
 	@for f in helper/*; do \
 		sed "s#@HOME@#$$HOME#" $$PWD/$$f > ~/.mozilla/native-messaging-hosts/$$(basename $$f) ; \
 	done
