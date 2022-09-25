@@ -19,7 +19,7 @@ async function updateBadge() {
 }
 
 async function sendNativeMessage(message) {
-  return await browser.runtime.sendNativeMessage("youtube_dl_firefox", message);
+  return await browser.runtime.sendNativeMessage("yt_dlp_firefox", message);
 }
 
 let helperWorking = false;
@@ -73,7 +73,7 @@ async function download(url) {
   if (!await testHelper()) {
     await browser.notifications.create(null, {
       type: "basic",
-      title: "youtube-dl",
+      title: "yt-dlp",
       message: "Couldn't communicate with helper program!\nHave you installed it?",
       iconUrl: "icon.svg",
     });
@@ -92,7 +92,7 @@ async function download(url) {
 
   const notificationId = await browser.notifications.create(null, {
     type: "basic",
-    title: "youtube-dl",
+    title: "yt-dlp",
     message: `Downloading ${url}`,
     iconUrl: "icon.svg",
   });
@@ -128,7 +128,7 @@ async function download(url) {
 
   await browser.notifications.create(null, {
     type: "basic",
-    title: "youtube-dl",
+    title: "yt-dlp",
     message: message,
     iconUrl: "icon.svg",
   });
@@ -140,7 +140,7 @@ async function download(url) {
 
 browser.contextMenus.create({
   id: "download",
-  title: "Download with youtube-dl",
+  title: "Download with yt-dlp",
   contexts: ["all"],
   icons: {
     16: "icon.svg",

@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
-  "name": "youtube-dl downloader",
-  "description": "Download media using youtube-dl",
+  "name": "yt-dlp downloader",
+  "description": "Download media using yt-dlp",
   "version": "0.1.1",
   "icons": {
     "48": "icon.svg"
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "youtube_dl_firefox@tyilo.com",
+      "id": "yt_dlp_firefox@tyilo.com",
       "strict_min_version": "80.0"
     }
   },

@@ -66,7 +66,7 @@
         <h2>Can't communicate with helper</h2>
       <p>
         For installation instructions, see <a
-          href="https://github.com/Tyilo/youtube_dl_firefox">here</a
+          href="https://github.com/Tyilo/yt_dlp_firefox">here</a
         >.
       </p>
       </div>

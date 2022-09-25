@@ -51,7 +51,7 @@ if action == "test":
 elif action == "download":
     url = message["url"]
     p = run(
-        ["youtube-dl", "--print-json", "--", url],
+        ["yt-dlp", "--print-json", "--", url],
         capture_output=True,
         text=True,
         cwd=DOWNLOADS,

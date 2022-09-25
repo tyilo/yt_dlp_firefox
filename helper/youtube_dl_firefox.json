@@ -1,7 +1,0 @@
-{
-  "name": "youtube_dl_firefox",
-  "description": "Native host helper",
-  "path": "/home/tyilo/.mozilla/native-messaging-hosts/youtube_dl_firefox",
-  "type": "stdio",
-  "allowed_extensions": ["youtube_dl_firefox@tyilo.com"]
-}

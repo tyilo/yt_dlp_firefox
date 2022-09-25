@@ -1,9 +1,9 @@
-# youtube-dl for Firefox
+# yt-dlp downloader for Firefox
 
-A Firefox browser extension for downloading media with [`youtube-dl`](https://youtube-dl.org/).
+A Firefox browser extension for downloading media with [`yt-dlp`](https://github.com/yt-dlp/yt-dlp).
 
 ## Installation
 
-Install the extension from [here](https://addons.mozilla.org/en-US/firefox/addon/youtube-dl-downloader/).
+Install the extension from [here](https://addons.mozilla.org/en-US/firefox/addon/yt-dlp-downloader/).
 
 Then clone this repository and run `make install` to install the required helper.

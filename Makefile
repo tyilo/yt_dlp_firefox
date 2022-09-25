@@ -8,10 +8,12 @@ dev: install
 
 install:
 	@for f in helper/*; do \
-		cp $$PWD/$$f ~/.mozilla/native-messaging-hosts/ ; \
+		sed "s#@HOME@#$$HOME#" $$PWD/$$f > ~/.mozilla/native-messaging-hosts/$$(basename $$f) ; \
 	done
 
 uninstall:
 	@cd helper; for f in *; do \
 		rm -f ~/.mozilla/native-messaging-hosts/$$f ; \
 	done
+
+.PHONY: build dev install uninstall
