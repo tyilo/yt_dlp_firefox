@@ -6,7 +6,16 @@ A Firefox browser extension for downloading media with [`yt-dlp`](https://github
 
 Install the extension from [here](https://addons.mozilla.org/en-US/firefox/addon/yt-dlp-downloader/).
 
-Then clone this repository and run `make install` to install the required helper.
+Then clone this repository and run `make install` to install the required helper in user home directory.
+
+If you want to install it as system wide application, then you need to execute installation with superuser rights, for example:
+
+`sudo make install`
+
+## Uninstallation
+To remove from user home directory execute `make uninstall`
+
+If you installed it as system wide, you need to run `sudo make uninstall`
 
 ## Snap/flatpak permissions
 
