@@ -7,6 +7,7 @@
 import json
 import struct
 import sys
+import configparser
 from pathlib import Path
 from subprocess import Popen, run
 
@@ -39,9 +40,36 @@ def send_message(encoded_message):
     sys.stdout.buffer.write(encoded_message["content"])
     sys.stdout.buffer.flush()
 
+def read_user_config():
+    config = configparser.ConfigParser()
+    with open(user_config_path) as config_file:
+        file_content = '[s]\n' + config_file.read()
+    config.read_string(file_content)
+    global DOWNLOAD_PATH
+    global OPTIONS
+    try:
+        DOWNLOAD_PATH = Path(config['s']['download_directory'])
+    except KeyError:
+        pass
+    try:
+        OPTIONS = config['s']['yt_dlp_options'].split()
+    except KeyError:
+        pass
 
-DOWNLOADS = Path.home() / "Downloads"
+DOWNLOAD_PATH = ''
+OPTIONS = ''
+user_config_path = Path.home() / ".config" / "yt_dlp_firefoxrc"
 
+if Path.is_file(user_config_path):
+   result = read_user_config()
+
+DEFAULT_DOWNLOAD_PATH = Path.home() / "Downloads"
+if not DOWNLOAD_PATH:
+    DOWNLOAD_PATH = DEFAULT_DOWNLOAD_PATH
+
+DEFAULT_OPTIONS = ["yt-dlp", "--print-json", "--"]
+if not OPTIONS:
+    OPTIONS = DEFAULT_OPTIONS
 
 message = get_message()
 
@@ -49,18 +77,31 @@ action = message["action"]
 if action == "test":
     reply = {"success": True}
 elif action == "download":
+    try:
+        user_addon_options = message["options"]
+    except KeyError:
+       user_addon_options = ''
+    if user_addon_options:
+        OPTIONS = user_addon_options
+    try:
+        user_addon_download_path = message["download_path"]
+    except KeyError:
+       user_addon_download_path = ''
+    if user_addon_download_path:
+        DOWNLOAD_PATH = user_addon_download_path
     url = message["url"]
+    OPTIONS.append(url)
     p = run(
-        ["yt-dlp", "--print-json", "--", url],
+        OPTIONS,
         capture_output=True,
         text=True,
-        cwd=DOWNLOADS,
+        cwd=DOWNLOAD_PATH,
     )
     if p.returncode == 0:
         output = json.loads(p.stdout)
         reply = {
             "success": True,
-            "path": str(DOWNLOADS / output["_filename"]),
+            "path": str(DOWNLOAD_PATH / output["_filename"]),
             "title": output["title"],
             "thumbnail": output["thumbnail"],
         }
