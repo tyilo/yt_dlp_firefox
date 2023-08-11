@@ -1,0 +1,7 @@
+{
+  "name": "yt_dlp_firefox",
+  "description": "Native host helper",
+  "path": "yt_dlp_firefox.bat",
+  "type": "stdio",
+  "allowed_extensions": ["yt_dlp_firefox@tyilo.com"]
+}
