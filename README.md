@@ -6,7 +6,7 @@ A Firefox browser extension for downloading media with [`yt-dlp`](https://github
 
 Install the extension from [here](https://addons.mozilla.org/en-US/firefox/addon/yt-dlp-downloader/).
 
-Then clone this repository and run `make install` to install the required helper, if you use windows, go inside the folder: `windows_helper_installer` and double click: `SETUP.bat` for more information on installing the windows helper read the [README.md](https://github.com/iron4umx/yt_dlp_firefox/blob/master/windows_helper_installer/README.md) file inside the `windows_helper_installer` folder, and for further information on the helper and porting in general visit the [yt-dlp Firefox Helper for Windows Wiki](https://github.com/iron4umx/yt_dlp_firefox/wiki).
+Then clone this repository, if you use linux: run `make install` to install the required helper, if you use windows, go inside the folder: `windows_helper_installer` and double click: `SETUP.bat` for more information on installing the windows helper read the [README.md](https://github.com/iron4umx/yt_dlp_firefox/blob/master/windows_helper_installer/README.md) file inside the `windows_helper_installer` folder, and for further information on the helper and porting in general visit the [yt-dlp Firefox Helper for Windows Wiki](https://github.com/iron4umx/yt_dlp_firefox/wiki).
 
 ## Snap/flatpak permissions
 
