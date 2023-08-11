@@ -1,4 +1,4 @@
-# yt-dlp Firefox Helper Setup Utility
+# yt-dlp Firefox Helper Setup Utility (`SETUP.bat`)
 
 The yt-dlp Firefox Helper Setup Utility is designed to simplify the installation, reinstallation, and uninstallation of the yt-dlp downloader for Firefox. This utility provides an interactive menu that guides you through the setup process and automates several steps for a seamless experience.
 
