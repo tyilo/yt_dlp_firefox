@@ -1,15 +1,15 @@
 {
-  "name": "popup",
-  "version": "0.0.0",
+  "name": "popup",             // Name of your project
+  "version": "0.0.0",          // Initial version of your project
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "dev": "vite",             // Development script: Start the Vite development server
+    "build": "vite build",     // Build script: Build the project using Vite
+    "serve": "vite preview"    // Serve script: Serve the production build using Vite
   },
-  "devDependencies": {
-    "rollup-plugin-svelte": "*",
-    "svelte": "*",
-    "svelte-preprocess": "*",
-    "vite": "*"
+  "devDependencies": {         // Development dependencies
+    "rollup-plugin-svelte": "*",    // Rollup plugin for compiling Svelte components
+    "svelte": "*",                  // The Svelte framework itself
+    "svelte-preprocess": "*",       // Preprocessor for Svelte components
+    "vite": "*"                     // The Vite build tool
   }
 }
