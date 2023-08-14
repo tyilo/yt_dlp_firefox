@@ -1,15 +1,14 @@
 #!/usr/bin/env -S python3 -u
 
-# Note that running python with the `-u` flag is required on Windows,
-# in order to ensure that stdin and stdout are opened in binary, rather
-# than text, mode.
-
+# Import required libraries
 import json
 import struct
 import sys
 from pathlib import Path
 from subprocess import Popen, run
 
+# Define the directory where downloaded files will be saved
+DOWNLOADS = Path.home() / "Downloads"
 
 # Read a message from stdin and decode it.
 def get_message():
@@ -17,21 +16,19 @@ def get_message():
 
     if not raw_length:
         sys.exit(0)
+    
     message_length = struct.unpack("=I", raw_length)[0]
     message = sys.stdin.buffer.read(message_length).decode("utf-8")
     return json.loads(message)
-
 
 # Encode a message for transmission, given its content.
 def encode_message(message_content):
     encoded_content = json.dumps(message_content).encode("utf-8")
     encoded_length = struct.pack("=I", len(encoded_content))
-    #  use struct.pack("10s", bytes), to pack a string of the length of 10 characters
     return {
         "length": encoded_length,
         "content": struct.pack(str(len(encoded_content)) + "s", encoded_content),
     }
-
 
 # Send an encoded message to stdout.
 def send_message(encoded_message):
@@ -39,17 +36,18 @@ def send_message(encoded_message):
     sys.stdout.buffer.write(encoded_message["content"])
     sys.stdout.buffer.flush()
 
-
-DOWNLOADS = Path.home() / "Downloads"
-
-
+# Read the incoming message
 message = get_message()
 
+# Extract the action from the message
 action = message["action"]
+
+# Process the action and generate a reply
 if action == "test":
     reply = {"success": True}
 elif action == "download":
     url = message["url"]
+    # Run yt-dlp command to fetch video information
     p = run(
         ["yt-dlp", "--print-json", "--", url],
         capture_output=True,
@@ -58,6 +56,7 @@ elif action == "download":
     )
     if p.returncode == 0:
         output = json.loads(p.stdout)
+        # Generate a successful reply with downloaded video information
         reply = {
             "success": True,
             "path": str(DOWNLOADS / output["_filename"]),
@@ -65,21 +64,25 @@ elif action == "download":
             "thumbnail": output["thumbnail"],
         }
     else:
+        # Generate a failure reply with the error message
         reply = {
             "success": False,
             "error": p.stderr,
         }
 elif action == "open":
     path = message["path"]
+    # Open the specified file using xdg-open (for Linux systems)
     Popen(["xdg-open", path])
     reply = {"success": True}
 elif action == "show":
     path = message["path"]
+    # Open the specified directory using nautilus (for Linux systems)
     Popen(["nautilus", "--", path])
     reply = {"success": True}
 else:
+    # Handle unknown actions and generate an error reply
     print(f"Got unknown action: {message}", file=sys.stderr)
     reply = {"success": False, "error": f"Unknown action: {action}"}
 
-
+# Encode and send the reply message
 send_message(encode_message(reply))
