@@ -1,7 +1,7 @@
 {
-  "name": "yt_dlp_firefox",
-  "description": "Native host helper",
-  "path": "@HOME@/.mozilla/native-messaging-hosts/yt_dlp_firefox",
-  "type": "stdio",
-  "allowed_extensions": ["yt_dlp_firefox@tyilo.com"]
+  "name": "yt_dlp_firefox",  // Name of the native messaging host
+  "description": "Native host helper",  // Description of the native messaging host
+  "path": "@HOME@/.mozilla/native-messaging-hosts/yt_dlp_firefox",  // Path to the native messaging host executable
+  "type": "stdio",  // Type of communication (using standard input and output)
+  "allowed_extensions": ["yt_dlp_firefox@tyilo.com"]  // List of allowed Firefox extensions
 }
