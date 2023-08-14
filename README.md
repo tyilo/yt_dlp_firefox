@@ -13,7 +13,7 @@ Enhance your Firefox browsing experience with the yt-dlp downloader extension. S
    - Run the command `make install` to install the required helper.
 
    **Windows**:
-   - Clone this repository.
+   - After instslling the extension, clone this repository.
    - Navigate to the `windows_helper_installer` folder and double-click `SETUP.bat`.
    - For detailed instructions on installing the Windows helper, refer to the [README.md](https://github.com/iron4umx/yt_dlp_firefox/blob/master/windows_helper_installer/README.md) file inside the `windows_helper_installer` folder.
 
