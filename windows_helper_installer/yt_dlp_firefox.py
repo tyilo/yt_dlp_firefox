@@ -6,6 +6,11 @@ import sys
 from pathlib import Path
 from subprocess import Popen, run
 
+# ----------------------------------------------
+# Native Messaging Host: yt_dlp_firefox.py
+# Origin: Linux version adapted for Windows
+# ----------------------------------------------
+
 # Read a message from stdin and decode it.
 def get_message():
     raw_length = sys.stdin.buffer.read(4)
