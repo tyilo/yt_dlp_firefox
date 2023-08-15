@@ -1,24 +1,28 @@
 {
   "manifest_version": 2,
-  "name": "yt-dlp downloader",
-  "description": "Download media using yt-dlp",
-  "version": "0.1.2",
+  "name": "yt-dlp downloader",          // Extension name
+  "description": "Download media using yt-dlp",   // Extension description
+  "version": "0.1.2",                   // Extension version
   "icons": {
-    "48": "icon.svg"
+    "48": "icon.svg"                    // Icon used for the extension
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "yt_dlp_firefox@tyilo.com",
-      "strict_min_version": "80.0"
+      "id": "yt_dlp_firefox@tyilo.com", // ID for Firefox
+      "strict_min_version": "80.0"      // Minimum Firefox version required
     }
   },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"]        // Background script file
   },
   "browser_action": {
-    "default_icon": "icon.svg",
-    "default_popup": "popup-dist/index.html",
-    "browser_style": true
+    "default_icon": "icon.svg",         // Default icon for browser action
+    "default_popup": "popup-dist/index.html", // Default popup page for browser action
+    "browser_style": true               // Use browser-specific styling for the browser action
   },
-  "permissions": ["nativeMessaging", "contextMenus", "notifications"]
+  "permissions": [
+    "nativeMessaging",                  // Permission to use native messaging
+    "contextMenus",                     // Permission to use context menus
+    "notifications"                     // Permission to display notifications
+  ]
 }
