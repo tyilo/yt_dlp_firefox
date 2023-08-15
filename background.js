@@ -53,11 +53,11 @@ async function testHelper() {
 // Test the helper's functionality
 testHelper();
 
-// Listen for runtime messages from the extension
-browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+// Listen for messages from the extension
+browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   switch (message.type) {
     case "popupOpen":
-      // Reset the count of new files and mark files as viewed after a short delay
+      // Reset newFiles counter and mark files as viewed after a short delay
       newFiles = 0;
       setTimeout(() => {
         for (let file of files) {
@@ -65,29 +65,53 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
       }, 100);
 
-      // Asynchronously update badge and return files and helper status
+      // Update badge and return data
       return (async () => {
         await updateBadge();
         return { files: files, helperWorking: await testHelper() };
       })();
 
     case "openFile":
-      // Send a native message to open a file using the helper
+      // Ensure the message.path is properly sanitized before using it
+      const sanitizedOpenPath = sanitizePath(message.path);
+
+      // Send the sanitized path to the native messaging host
       sendNativeMessage({
         action: "open",
-        path: message.path,
+        path: sanitizedOpenPath,
       });
       break;
 
     case "showFile":
-      // Send a native message to show the file in Windows Explorer
+      // Ensure the message.path is properly sanitized before using it
+      const sanitizedShowPath = sanitizePath(message.path);
+
+      // Send the sanitized path to the native messaging host
       sendNativeMessage({
         action: "show",
-        path: message.path,
+        path: sanitizedShowPath,
       });
       break;
   }
 });
+
+// Sanitize a file path to prevent directory traversal attacks
+function sanitizePath(path) {
+  // Normalize the path to remove any duplicate slashes and resolve any ".." segments
+  const normalizedPath = path.replace(/\/+/g, '/').replace(/(^|\/)(?:\.\/)+/g, '$1');
+
+// Dynamically determine the allowed folder path based on extension installation
+const allowedFolder = browser.runtime.getURL("popup-dist/");
+
+  // Ensure the path is within the allowed folder
+  if (!normalizedPath.startsWith(allowedFolder)) {
+    throw new Error("Invalid file path");
+  }
+
+  return normalizedPath;
+}
+
+
 
 // Function to initiate the download process for a given URL
 async function download(url) {
