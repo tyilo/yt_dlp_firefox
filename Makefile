@@ -1,3 +1,5 @@
+INSTALL_DIR ?= $(HOME)/mozilla
+
 build: install
 	@cd popup && npm install && npm run build
 	@web-ext build
@@ -7,15 +9,15 @@ dev: install
 		 split-window 'web-ext run'
 
 install:
-	@mkdir -p ~/.mozilla/native-messaging-hosts
+	@mkdir -p $(INSTALL_DIR)/native-messaging-hosts
 	@for f in helper/*; do \
-		sed "s#@HOME@#$$HOME#" $$PWD/$$f > ~/.mozilla/native-messaging-hosts/$$(basename $$f) ; \
-		chmod u+x ~/.mozilla/native-messaging-hosts/yt_dlp_firefox ; \
+		sed "s#@HOME@#$$HOME#" $$PWD/$$f > $(INSTALL_DIR)/native-messaging-hosts/$$(basename $$f) ; \
+		chmod u+x $(INSTALL_DIR)/native-messaging-hosts/yt_dlp_firefox ; \
 	done
 
 uninstall:
 	@cd helper; for f in *; do \
-		rm -f ~/.mozilla/native-messaging-hosts/$$f ; \
+		rm -f $(INSTALL_DIR)/native-messaging-hosts/$$f ; \
 	done
 
 .PHONY: build dev install uninstall
