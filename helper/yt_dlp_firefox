@@ -5,6 +5,8 @@
 # than text, mode.
 
 import json
+import os
+import shlex
 import struct
 import sys
 from pathlib import Path
@@ -39,28 +41,33 @@ def send_message(encoded_message):
     sys.stdout.buffer.write(encoded_message["content"])
     sys.stdout.buffer.flush()
 
+message = get_message()
 
 DOWNLOADS = Path.home() / "Downloads"
-
-
-message = get_message()
+if 'wd' in message:
+    message_wd = os.path.expanduser(message['wd'])
+    if os.path.exists(message_wd):
+        DOWNLOADS = message_wd
 
 action = message["action"]
 if action == "test":
     reply = {"success": True}
 elif action == "download":
     url = message["url"]
+    command = ["yt-dlp", *shlex.split(message['flags']), "--print-json", "--", url]
+
     p = run(
-        ["yt-dlp", "--print-json", "--", url],
+        command,
         capture_output=True,
         text=True,
         cwd=DOWNLOADS,
     )
+
     if p.returncode == 0:
         output = json.loads(p.stdout)
         reply = {
             "success": True,
-            "path": str(DOWNLOADS / output["_filename"]),
+            "path": f"{DOWNLOADS}/{output['_filename']}",
             "title": output["title"],
             "thumbnail": output["thumbnail"],
         }

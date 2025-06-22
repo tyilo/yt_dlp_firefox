@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "yt-dlp downloader",
   "description": "Download media using yt-dlp",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "icons": {
     "48": "icon.svg"
   },
@@ -20,5 +20,8 @@
     "default_popup": "popup-dist/index.html",
     "browser_style": true
   },
-  "permissions": ["nativeMessaging", "contextMenus", "notifications"]
+  "options_ui": {
+    "page": "options-dist/index.html"
+  },
+  "permissions": ["activeTab", "contextMenus", "nativeMessaging", "notifications", "storage"]
 }
