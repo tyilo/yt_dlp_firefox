@@ -1,15 +1,16 @@
 {
-  "name": "popup",
+  "name": "yt_dlp_firefox",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node build.mjs",
     "serve": "vite preview"
   },
   "devDependencies": {
     "rollup-plugin-svelte": "*",
     "svelte": "*",
     "svelte-preprocess": "*",
-    "vite": "*"
+    "vite": "*",
+    "web-ext": "^8.8.0"
   }
 }

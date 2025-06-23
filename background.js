@@ -97,11 +97,22 @@ async function download(url) {
     iconUrl: "icon.svg",
   });
 
+  const defaultOptions = {
+    'flags': '',
+    'wd': '~/Downloads',
+  }
+  const storage = await browser.storage.local.get(defaultOptions);
+  if (storage['wd'].trim() === "") {
+    storage['wd'] = defaultOptions['wd']
+  }
+
   let response;
   try {
     response = await sendNativeMessage({
       action: "download",
+      flags: storage['flags'],
       url: url,
+      wd: storage['wd']
     });
   } catch(e) {
     response = {
@@ -138,14 +149,7 @@ async function download(url) {
   await updateBadge();
 }
 
-browser.contextMenus.create({
-  id: "download",
-  title: "Download with yt-dlp",
-  contexts: ["all"],
-  icons: {
-    16: "icon.svg",
-  },
-});
+browser.storage.local.remove(['browserAction', 'contextMenus'])
 
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.linkUrl) {
@@ -154,3 +158,18 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
     await download(info.pageUrl);
   }
 });
+
+for (let context of ['link', 'page']) {
+  browser.contextMenus.create({
+    id: context,
+    title: "Download with yt-dlp",
+    contexts: [context],
+    icons: {
+      16: "icon.svg",
+    },
+  });
+}
+
+browser.browserAction.onClicked.addListener(async (tab) => {
+  await download(tab.url)
+})
