@@ -3,11 +3,11 @@ TOR_INSTALL_DIR ?= $(HOME)/.local/share/torbrowser/tbb/x86_64/tor-browser/Browse
 
 build: install
 	@cd popup && npm install && npm run build
-	@web-ext build
+	@npx web-ext build
 
 dev: install
-	tmux new-session 'cd popup; git ls-files | entr npm run build' ';' \
-		 split-window 'web-ext run'
+	tmux new-session 'git ls-files | entr npm run build' ';' \
+		 split-window 'npx web-ext run'
 
 define move_helper
 	$(eval $@_NMH_PARENT_DIR = $(1))

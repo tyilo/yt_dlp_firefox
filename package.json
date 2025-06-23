@@ -10,9 +10,7 @@
     "rollup-plugin-svelte": "*",
     "svelte": "*",
     "svelte-preprocess": "*",
-    "vite": "*"
-  },
-  "dependencies": {
+    "vite": "*",
     "web-ext": "^8.8.0"
   }
 }
