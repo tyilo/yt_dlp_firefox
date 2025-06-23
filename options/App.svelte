@@ -66,6 +66,10 @@
 </script>
 
 <div id='forms'>
+    <form id='path'>
+        yt-dlp path:<br><br>
+        <EditableSpan dataName='path'></EditableSpan>
+    </form>
     <form id='flags'>
         yt-dlp flags:<br><br>
         <EditableSpan dataName='flags'></EditableSpan>

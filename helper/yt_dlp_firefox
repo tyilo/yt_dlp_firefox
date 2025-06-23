@@ -54,7 +54,9 @@ if action == "test":
     reply = {"success": True}
 elif action == "download":
     url = message["url"]
-    command = ["yt-dlp", *shlex.split(message['flags']), "--print-json", "--", url]
+    path = message.get("path", "yt-dlp")
+    path = os.path.expanduser(path)
+    command = [path, *shlex.split(message['flags']), "--print-json", "--", url]
 
     p = run(
         command,

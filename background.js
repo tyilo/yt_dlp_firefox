@@ -98,6 +98,7 @@ async function download(url) {
   });
 
   const defaultOptions = {
+    'path': undefined,
     'flags': '',
     'wd': '~/Downloads',
   }
@@ -110,6 +111,7 @@ async function download(url) {
   try {
     response = await sendNativeMessage({
       action: "download",
+      path: storage['path'],
       flags: storage['flags'],
       url: url,
       wd: storage['wd']
