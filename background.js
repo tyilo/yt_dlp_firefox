@@ -151,7 +151,42 @@ async function download(url) {
   await updateBadge();
 }
 
-browser.storage.local.remove(['browserAction', 'contextMenus'])
+const defaultOptions = {
+  'browserAction': 'popup',
+  'contextMenus': {
+    'link': true,
+    'page': true,
+  }
+}
+
+browser.storage.local.get(defaultOptions, async (items) => {
+  let popup;
+  switch (items['browserAction']) {
+    case 'popup':
+      popup = null;
+      break;
+    case 'download':
+      popup = '';
+      break;
+    default:
+      return;
+  }
+  await browser.browserAction.setPopup({popup: popup})
+
+  const contextMenus = items['contextMenus']
+  for (let context of Object.keys(contextMenus)) {
+    if (contextMenus[context]) {
+      browser.contextMenus.create({
+        id: context,
+        title: "Download with yt-dlp",
+        contexts: [context],
+        icons: {
+          16: "icon.svg",
+        },
+      });
+    }
+  }
+})
 
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.linkUrl) {
@@ -160,17 +195,6 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
     await download(info.pageUrl);
   }
 });
-
-for (let context of ['link', 'page']) {
-  browser.contextMenus.create({
-    id: context,
-    title: "Download with yt-dlp",
-    contexts: [context],
-    icons: {
-      16: "icon.svg",
-    },
-  });
-}
 
 browser.browserAction.onClicked.addListener(async (tab) => {
   await download(tab.url)
