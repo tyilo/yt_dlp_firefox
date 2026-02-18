@@ -3,7 +3,7 @@
     const storage = browser.storage.local.get({[dataName]: ""});
 
     const saveFlags = async (event) => {
-        await browser.storage.local.set({[event.target.dataset.name]: event.target.innerText});
+        await browser.storage.local.set({[event.target.dataset.name]: event.target.innerText.trim()});
     }
 
     const pasteClipboard = (event) => {
