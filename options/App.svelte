@@ -99,8 +99,6 @@
 <style>
     :global(body, html) {
         align-items: center;
-        background-color: #282828;
-        color: red;
         display: flex;
         flex-wrap: wrap;
         font-weight: bold;
@@ -114,8 +112,6 @@
     }
 
     :global(span) {
-        background-color: white;
-        color: black;
         font-weight: normal;
         outline: none;
         padding: 1px 2px;
@@ -127,13 +123,7 @@
         margin-top: 5px;
     }
 
-    label {
-        color: white;
-    }
-
     input {
-        accent-color: red;
-        border-color: red;
         font-weight: bold;
     }
 

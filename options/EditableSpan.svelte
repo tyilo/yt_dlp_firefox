@@ -3,7 +3,7 @@
     const storage = browser.storage.local.get({[dataName]: ""});
 
     const saveFlags = async (event) => {
-        await browser.storage.local.set({[event.target.dataset.name]: event.target.innerText.trim()});
+        await browser.storage.local.set({[event.target.dataset.name]: event.target.innerText});
     }
 
     const pasteClipboard = (event) => {
@@ -20,6 +20,7 @@
 <style>
     span {
         display: inline-block;
+        border: 1px solid black;
         word-wrap: break-word;
         word-break: break-word;
     }
