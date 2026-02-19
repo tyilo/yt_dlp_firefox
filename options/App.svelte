@@ -76,7 +76,7 @@
     </form>
 
     <form id='wd'>
-        Working directory:<br><br>
+        Download directory:<br><br>
         <EditableSpan dataName='wd'></EditableSpan>
     </form>
 
