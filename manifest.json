@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "yt-dlp downloader",
   "description": "Download media using yt-dlp",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "icons": {
     "48": "icon.svg"
   },
