@@ -4,6 +4,8 @@ TOR_INSTALL_DIR ?= $(HOME)/.local/share/torbrowser/tbb/x86_64/tor-browser/Browse
 build: install
 	@cd popup && npm install && npm run build
 	@npx web-ext build
+	@mkdir -p submission
+	@zip submission/source-$$(jq --raw-output .version manifest.json).zip $$(git ls-files)
 
 dev: install
 	tmux new-session 'git ls-files | entr npm run build' ';' \
