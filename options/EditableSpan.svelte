@@ -1,6 +1,6 @@
 <script>
-    export let dataName;
-    const storage = browser.storage.local.get({[dataName]: ""});
+    let { dataName, ...rest } = $props();
+    const storage = $derived(browser.storage.local.get({[dataName]: ""}));
 
     const saveFlags = async (event) => {
         await browser.storage.local.set({[event.target.dataset.name]: event.target.innerText});
@@ -12,9 +12,8 @@
     }
 </script>
 
-{#await storage}
-{:then items}
-    <span data-name={dataName} {...$$restProps} spellcheck='false' contenteditable='true' on:input={saveFlags} on:paste={pasteClipboard}>{items[dataName]}</span>
+{#await storage then items}
+    <span data-name={dataName} {...rest} spellcheck='false' contenteditable='true' oninput={saveFlags} onpaste={pasteClipboard}>{items[dataName]}</span>
 {/await}
 
 <style>

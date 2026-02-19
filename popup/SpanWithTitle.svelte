@@ -1,8 +1,9 @@
 <script>
-	let span;
-	$: title = span && span.textContent;
+	let { children } = $props();
+	let span = $state();
+	let title = $derived(span && span.textContent);
 </script>
 
 <span bind:this={span} title={title}>
-	<slot></slot>
+	{@render children()}
 </span>

@@ -82,16 +82,16 @@
 
     <form id='browserAction'>
         Browser action:<br><br>
-        <input id='browserActionPopup' type='radio' name='browserAction' value='popup' on:change={changePopup}>
+        <input id='browserActionPopup' type='radio' name='browserAction' value='popup' onchange={changePopup}>
         <label for='browserActionPopup'> Open popup</label><br>
-        <input id='browserActionDownload' type='radio' name='browserAction' value='download' on:change={changePopup}>
+        <input id='browserActionDownload' type='radio' name='browserAction' value='download' onchange={changePopup}>
         <label for='browserActionDownload'> Run yt-dlp</label>
     </form>
     <form id='contextMenus'>
         Context menu contexts:<br><br>
-        <input id='contextMenusLink' type='checkbox' name='contextMenus' value='link' on:change={toggleContextMenu}>
+        <input id='contextMenusLink' type='checkbox' name='contextMenus' value='link' onchange={toggleContextMenu}>
         <label for='contextMenusLink'> Link</label><br>
-        <input id='contextMenusPage' type='checkbox' name='contextMenus' value='page' on:change={toggleContextMenu}>
+        <input id='contextMenusPage' type='checkbox' name='contextMenus' value='page' onchange={toggleContextMenu}>
         <label for='contextMenusPage'> Page</label>
     </form>
 </div>

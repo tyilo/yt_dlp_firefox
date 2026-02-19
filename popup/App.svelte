@@ -1,7 +1,7 @@
 <script>
   import SpanWithTitle from "./SpanWithTitle.svelte";
 
-  let data = null;
+  let data = $state(null);
   async function init() {
     if (window.browser) {
       data = await browser.runtime.sendMessage({
@@ -80,7 +80,7 @@
               <td
                 class="file status-{file.status}"
                 class:viewed={file.viewed}
-                on:click={openFile(file)}
+                onclick={openFile(file)}
               >
                 <figure>
                   <img src={file.thumbnail} alt="" />
@@ -103,7 +103,7 @@
                   {#if file.status === "done"}
                     <button
                       type="button"
-                      on:click={(e) => {
+                      onclick={(e) => {
                         e.stopPropagation();
                         showFile(file);
                       }}>Show</button
